@@ -1,0 +1,25 @@
+name: OWASP ZAP Security Scan
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  zap:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Start application
+        run: |
+          docker build -t devsecops-web .
+          docker run -d -p 5000:5000 --name devsecops-container devsecops-web
+
+      - name: OWASP ZAP Scan
+        uses: zaproxy/action-baseline@v0.14.0
+        with:
+          target: "http://127.0.0.1:5000"
