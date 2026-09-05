@@ -1,0 +1,7 @@
+rules:
+  - id: hardcoded-password-demo
+    pattern: password = "admin123"
+    message: "Demo: Sabit kodlanmış parola tespit edildi."
+    severity: ERROR
+    languages:
+      - python
